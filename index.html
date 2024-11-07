@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Webview Example</title>
+  <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"
+  ></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      overflow: hidden; /* Prevent body scrolling if iframe is full screen */
+    }
+    iframe {
+      width: 100%;
+      height: 100vh;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="vifo-whitelabel"></div>
+
+  <script>
+    window.addEventListener("load", function () {
+      var whitelabelUrl = "https://pvi-uat.vifo.vn"; // URL to load in iframe
+      var VifoFrame = `<iframe id="vifo_whitelabel_iframe" src="${whitelabelUrl}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      
+      document.getElementById("vifo-whitelabel").innerHTML = VifoFrame;
+    });
+
+    // Listen for messages from iframe
+    window.addEventListener("message", function (event) {
+      // Make sure to check the origin of the message for security reasons
+      if (event.origin !== "https://pvi-uat.vifo.vn") {
+        console.warn("Message from unknown origin", event.origin);
+        return;
+      }
+      // Handle the message from iframe (for example, log it)
+      console.log(event.data);
+    });
+  </script>
+</body>
+</html>
